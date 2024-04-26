@@ -25,6 +25,18 @@ public class UsuarioController {
         return usuarioRepository.save(usuario);
     }
 
+    @PostMapping("/login")
+    public Boolean login(@RequestBody Usuario usuario) {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        for (Usuario u : usuarios) {
+            if (u.getNome().equals(usuario.getNome())
+                    && u.getSenha().equals(usuario.getSenha())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarUsuario(@PathVariable Long id) { // Alterado o nome do método para deletarUsuario
         if (usuarioRepository.existsById(id)) {
